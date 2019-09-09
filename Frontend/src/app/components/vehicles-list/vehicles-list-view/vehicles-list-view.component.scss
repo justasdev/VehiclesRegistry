@@ -1,0 +1,119 @@
+@import "../../../../assets/styles/variables";
+
+$header-content-height: 40px;
+$row-height: 60px;
+$header-padding: 20px;
+$row-cell-font-size: 1rem;
+
+:host{
+  max-width: 1000px;
+  margin: auto;
+  display: block;
+}
+
+.header{
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  padding: $header-padding $header-padding;
+  display: flex;
+}
+
+.search{
+  align-self: stretch;
+  position: relative;
+  border-radius: $border-radius;
+  overflow: hidden;
+  max-width: 80%;
+  width: 500px;
+  input{
+    width: 100%;
+    font-size: 1.3rem;
+    height: 100%;
+    outline: none;
+    border: none;
+    padding: 0 5px;
+  }
+}
+
+.page-size{
+  position: relative;
+  margin-left: auto;
+  max-height: $header-content-height;
+  padding-left: 1rem;
+  ::ng-deep{
+    .mat-form-field-infix{
+      width: 3rem;
+    }
+    .mat-form-field-underline{
+      display: none;
+    }
+    .mat-form-field-infix{
+      padding: 0 0;
+    }
+    .mat-select-value-text,
+    .mat-select-arrow,
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow{
+      color: white;
+    }
+  }
+}
+
+.row-controls{
+  justify-content: center;
+  display: flex;
+  width: 5rem;
+  .zmdi{
+    font-size: 1.5rem;
+  }
+  .zmdi, loader{
+    vertical-align: middle;
+  }
+}
+
+.control-wrapper{
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+}
+
+loader{
+  display: inline-block;
+}
+
+
+.add-new{
+  min-width: $header-content-height;
+  min-height: $header-content-height;
+  text-align: center;
+  vertical-align: middle;
+  line-height: $header-content-height;
+  font-size: 2rem;
+  margin-right: $header-padding;
+}
+
+::ng-deep{
+  ngx-datatable{
+    font-family: 'Fira Sans', sans-serif;
+  }
+  datatable-body-row,
+  datatable-body-cell,
+  datatable-body .datatable-row-center{
+    height: $row-height !important;
+  }
+  datatable-header-cell{
+    font-size: 1.1rem;
+    font-weight: bold !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  datatable-body-cell{
+    display: flex !important;
+    align-items: center !important;
+    font-size: $row-cell-font-size !important;
+  }
+  datatable-body-row .datatable-row-center{
+    align-items: center;
+  }
+}
+

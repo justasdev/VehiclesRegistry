@@ -1,0 +1,45 @@
+<form [formGroup]="_newVehicleForm" (ngSubmit)="_onSubmit(_newVehicleForm)">
+  <mat-form-field>
+    <input type="text" formControlName="number" matInput placeholder="Number eg. ABC123">
+    <mat-error *ngIf="_newVehicleForm.get('number').errors as errors">
+      <ng-container *ngIf="errors.required;">Number is required</ng-container>
+      <ng-container *ngIf="errors.pattern">Wrong number format</ng-container>
+      <ng-container *ngIf="errors.numberTaken">Number taken</ng-container>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" formControlName="owner" matInput placeholder="Owner">
+    <mat-error *ngIf="_newVehicleForm.get('owner').errors as errors">
+      <ng-container *ngIf="errors.required;">Owner is required</ng-container>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Vehicle model</mat-label>
+    <mat-select #modelSelect formControlName="model" (selectionChange)="_modelSelected($event.value)">
+      <mat-option [value]="null">
+        Select model
+      </mat-option>
+      <mat-option *ngFor="let model of _allModels$ | async" [value]="model">
+        {{model}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="_newVehicleForm.get('model').errors as errors">
+      <ng-container *ngIf="errors.required;">Model is required</ng-container>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Vehicle make</mat-label>
+    <mat-select #makeSelect formControlName="make">
+      <mat-option [value]="null">
+        Select make
+      </mat-option>
+      <mat-option *ngFor="let make of _modelMakes$ | async" [value]="make">
+        {{make}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="_newVehicleForm.get('make').errors as errors">
+      <ng-container *ngIf="errors.required;">Make is required</ng-container>
+    </mat-error>
+  </mat-form-field>
+  <button class="button" [ngClass]="{'disabled' : _submitDisabled}">{{!!_vehicle ? 'Update car' : 'Add car'}}</button>
+</form>

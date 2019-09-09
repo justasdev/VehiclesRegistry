@@ -1,0 +1,31 @@
+body{
+  background-color: aliceblue;
+}
+
+.header{
+  background-color: #B1DEB4;
+}
+
+.search{
+  input{
+    color: white;
+    background-color: #A1BAAA;
+  }
+}
+
+.row-controls{
+  .zmdi-delete{
+    color: #9496c2;
+  }
+  .zmdi-edit{
+    color: #7ac298;
+  }
+}
+
+ngx-datatable{
+  background-color: #b2c2b1;
+}
+
+loader{
+  color: grey;
+}

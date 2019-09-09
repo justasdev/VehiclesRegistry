@@ -1,0 +1,10 @@
+<vehicles-list-view *ngIf="!_listLoading; else loader" [vehicles]="_vehicles$ | async"
+                    (addNewVehicle)="_addNewVehicle()"
+                    (removeVehicle)="_removeVehicle($event)"
+                    (updateVehicle)="_updateVehicle($event)"
+                    (searchVehicles)="_searchValues$.next($event)"
+                    [processingVehicles]="_processingVehicles">
+</vehicles-list-view>
+<ng-template #loader>
+  <loader></loader>
+</ng-template>

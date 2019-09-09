@@ -1,0 +1,6 @@
+{
+  "mongodb": {
+    "url": "mongodb://localhost",
+    "database": "vehicleOwners_TEST"
+  }
+}

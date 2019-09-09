@@ -1,0 +1,53 @@
+<div class="header">
+  <div class="button add-new" matRipple [matTooltip]="'Add vehicle'" (click)="_addNew()">
+    <a class="zmdi zmdi-plus"></a>
+  </div>
+  <div class="search">
+    <input placeholder="Search..." (input)="_searchValueChanged($event)">
+  </div>
+  <div class="page-size">
+    <mat-form-field>
+      <mat-select [value]="_pageSize" (selectionChange)="_onPageSizeChanged($event.value)">
+        <mat-option [value]="15">
+          15
+        </mat-option>
+        <mat-option [value]="30">
+          30
+        </mat-option>
+        <mat-option [value]="50">
+          50
+        </mat-option>
+        <mat-option [value]="100">
+          100
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<ngx-datatable *ngIf="vehicles" #datatable [columns]="_vehicleColumns"
+               [rows]="vehicles"
+               [footerHeight]="100"
+               [limit]="_pageSize"
+               [headerHeight]="40"
+               [count]="vehicles.length"
+               [trackByProp]="'number'"
+               [scrollbarH]="true"
+               class="material vehicles-table"
+                >
+</ngx-datatable>
+<ng-template #vehicleControlsTpl
+            let-row="row">
+  <div class="row-controls">
+    <ng-container *ngIf="!_isVehicleProcessing(row); else rowLoader">
+      <div class="control-wrapper">
+        <i [matTooltip]="'Edit'" class="zmdi zmdi-edit" (click)="_updateVehicle(row)"></i>
+      </div>
+      <div class="control-wrapper">
+        <i [matTooltip]="'Delete'" class="zmdi zmdi-delete" (click)="_removeVehicle(row)"></i>
+      </div>
+    </ng-container>
+    <ng-template #rowLoader>
+      <loader-circle [size]="3"></loader-circle>
+    </ng-template>
+  </div>
+</ng-template>
