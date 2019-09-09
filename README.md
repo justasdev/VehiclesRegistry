@@ -17,7 +17,13 @@ Angular 8, NodeJS/Express, MongoDB CRUD application with scraper for fake data.
 
 **Backend uses `convict` library for configuration. You can inspect Backend/config/index for configuration json schema and variables meanings*
 
+**REQUIREMENTS**
+
+ - NodeJS
+ - MongoDB
+
 **Scraping**
+
 Fake data is scraped from cars-data.com and listofrandomnames.com and saved to Backend/setup/data.
 Subsequent builds will not scrap data if it is already scraped and saved to Backend/setup/data.
 
