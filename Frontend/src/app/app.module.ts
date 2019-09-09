@@ -34,7 +34,7 @@ if (environment.production)
   enableProdMode();
 }
 
-export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<State>>('root reducer');
+export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<State>>('REDUCER_TOKEN');
 
 @NgModule({
   declarations: [

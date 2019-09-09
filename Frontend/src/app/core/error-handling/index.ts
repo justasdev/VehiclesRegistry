@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ErrorAction} from '../state/vehicle.actions';
 import Swal from 'sweetalert2';
 import { ErrorHandler } from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -12,18 +13,19 @@ export class GlobalErrorHandler implements ErrorHandler {
 }
 
 export class ApiError extends Error{
-    constructor(public message: string, public status: number)
+
+    get message(): string
     {
-      super(message);
+      return this.httpError.message;
+    }
+
+    get status(): number
+    {
+      return this.httpError.status;
+    }
+
+    constructor(public httpError: HttpErrorResponse)
+    {
+      super(httpError.message);
     }
 }
-
-//TODO: define global error handler
-
-export const showError = (cause: ErrorAction) => {
-  Swal.fire({
-    type: 'error',
-    title: 'ERROR',
-    text: cause.error.message
-  });
-};

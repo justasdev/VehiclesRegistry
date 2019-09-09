@@ -8,7 +8,6 @@ import {filter, map, startWith, takeUntil} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {AddVehicleComponent} from './add-vehicle/add-vehicle.component';
 import {VehiclesApiService} from '../../core/api/vehicles-api.service';
-import {showError} from '../../core/error-handling';
 import Swal from 'sweetalert2';
 import {API_RESPONSES} from '../../core/api/response-handling';
 import {notifyOnResponse} from '../../core/notifying';

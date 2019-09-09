@@ -5,11 +5,12 @@ const DURATION = 3000;
 
 export const notifyOnResponse = (response: ApiResponseAction, successMsg?: string, errorMsg?: string) =>
 {
+  console.log(response);
   if (response.error)
   {
     return Swal.fire({
       type: 'error',
-      title: 'ERROR',
+      title: 'ERROR' + response.error.status ? ` ${response.error.status}` : '',
       text: errorMsg || response.error.message,
       showConfirmButton: false,
       timer: DURATION

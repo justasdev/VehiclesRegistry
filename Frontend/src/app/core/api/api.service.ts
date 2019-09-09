@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, of, pipe} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
 import {ApiError} from '../error-handling';
 import {environment} from '../../../environments/environment';
 
 const API_ROOT = environment.apiRoot;
-const wrapError = catchError(err => of(new ApiError(err.error, err.status)));
+const wrapError = catchError((err: HttpErrorResponse) => of(new ApiError(err)));
 
 @Injectable({
   providedIn: 'root'

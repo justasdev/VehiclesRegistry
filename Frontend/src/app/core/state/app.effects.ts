@@ -2,23 +2,16 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {VehiclesApiService} from '../api/vehicles-api.service';
 import {
-  addVehicle, apiError, apiResponse,
-  AppAction,
+  addVehicle,
+  apiResponse,
   deleteVehicle,
   loadVehicles,
   updateVehicle,
-  vehicleAdded,
-  vehicleDeleted,
-  vehiclesLoaded, vehicleUpdated
 } from './vehicle.actions';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs';
 import {ApiError} from '../error-handling';
 
 const makeApiResponse = (sourceAction, payload?) => map(res => apiResponse(sourceAction, res instanceof ApiError ? res : null, payload || res));
-const resultOrError = (successAction, errorAction, sourceAction) => map(res => res instanceof ApiError ? errorAction(res, sourceAction) : successAction(res));
-const payloadOrError = (payload, successAction, errorAction, sourceAction) => map(res => res instanceof ApiError ? errorAction(res, sourceAction) : successAction(payload));
 
 @Injectable()
 export class AppEffects {
