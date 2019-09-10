@@ -6,7 +6,7 @@ const DEFAULT_DATABASE = 'vehicleOwners_DEV';
 
 let {mongoUrl, database} = {DEFAULT_URL, DEFAULT_DATABASE};
 
-const isDuplicate = (err) => [11000, 11001].indexOf(error.code) > -1;
+const isDuplicate = (err) => [11000, 11001].indexOf(err.code) > -1;
 
 async function connect() {
     const client = await MongoClient.connect(mongoUrl, {
@@ -96,7 +96,7 @@ async function addOwner(owner)
     }catch (e) {
         if (isDuplicate(e))
         {
-            error(`Number ${owner.number} already exists!`);
+            throw error(`Number ${owner.number} already exists!`, 400);
         }
     }
 }

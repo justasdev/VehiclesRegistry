@@ -5,7 +5,6 @@ const DURATION = 3000;
 
 export const notifyOnResponse = (response: ApiResponseAction, successMsg?: string, errorMsg?: string) =>
 {
-  console.log('API RESPONSE', response);
   if (response.error)
   {
     return Swal.fire({
@@ -21,7 +20,7 @@ export const notifyOnResponse = (response: ApiResponseAction, successMsg?: strin
       type: 'success',
       text: successMsg || 'Success!',
       showConfirmButton: false,
-      timer: 60000
+      timer: DURATION
     });
   }
 };

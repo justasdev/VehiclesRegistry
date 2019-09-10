@@ -41,15 +41,21 @@ $row-cell-font-size: 1rem;
   max-height: $header-content-height;
   padding-left: 1rem;
   ::ng-deep{
+    mat-select{
+      font-size: 1.2rem;
+    }
     .mat-form-field-infix{
       width: 3rem;
+      border-radius: $border-radius;
+      border-width: 1px;
+      border-style: solid;
+      padding: 0 0;
+      line-height: $header-content-height;
     }
     .mat-form-field-underline{
       display: none;
     }
-    .mat-form-field-infix{
-      padding: 0 0;
-    }
+
     .mat-select-value-text,
     .mat-select-arrow,
     .mat-form-field.mat-focused.mat-primary .mat-select-arrow{

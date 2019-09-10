@@ -11,6 +11,9 @@ body{
     color: white;
     background-color: #A1BAAA;
   }
+  ::placeholder{
+    color: white;
+  }
 }
 
 .row-controls{
@@ -19,6 +22,12 @@ body{
   }
   .zmdi-edit{
     color: #7ac298;
+  }
+}
+
+.page-size{
+  .mat-form-field-infix{
+    border-color: white;
   }
 }
 

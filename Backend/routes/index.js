@@ -66,7 +66,6 @@ router.param('number', function (req, res, next) {
 });
 
 router.get('/api/vehicleOwners', async function (req, res, next) {
-  throw error('Test err msg');
   res.send(await persistence.getOwners());
 });
 
@@ -80,7 +79,8 @@ router.get('/api/vehicles/exists/:number', async function (req, res, next) {
 
 router.post('/api/vehicles/add', async function (req, res, next) {
   const owner = validateOwnerVehicle(req.body);
-  if (!await persistence.addOwner(await verifyNotExists(owner.number, res)))
+  //No need to check or exists. On duplicate, error will be thrown in persistence
+  if (!await persistence.addOwner(owner))
   {
     //Record validated and not exists in persistence. Unknown error!
     throw error('Vehicle owner was not added.');
@@ -98,7 +98,8 @@ router.delete('/api/vehicles/:number', async function (req, res, next) {
 
 router.put('/api/vehicles', async function (req, res, next) {
   const vehicleOwner = validateOwnerVehicle(req.body);
-  if (!await persistence.updateOwner(await verifyExists(vehicleOwner.number, res)))
+  await verifyExists(vehicleOwner.number, res);
+  if (!await persistence.updateOwner(vehicleOwner))
   {
     throw error('Vehicle owner was not deleted');
   }
