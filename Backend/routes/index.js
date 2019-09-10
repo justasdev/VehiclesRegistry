@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const _ = require('lodash');
 const error = require('../error_handling').error;
+const persistence = require('../persistence');
 
 const numberValid = (number) => /^[a-z]{3}[0-9]{3}$/i.test(number) ? number : null;
-const persistence = require('../persistence');
 
 const getOrTrhow = (object) => (prop) => (error) => {
   if (!object.hasOwnProperty(prop))
@@ -46,18 +45,28 @@ async function verifyExists(number, res)
 {
   if (!await persistence.numberExists(number))
   {
-    res.status(404).end();
-    return;
+    throw error('Vehicle does not exists.',404);
   }
   return number;
 }
 
+async function verifyNotExists(number, res)
+{
+  if (await persistence.numberExists(number))
+  {
+    throw error('Vehicle already exists.',400);
+  }
+  return number;
+}
+
+//Intercepts and validates all requests with number parameter.
 router.param('number', function (req, res, next) {
   validateNumber(req.params.number);
   next();
 });
 
 router.get('/api/vehicleOwners', async function (req, res, next) {
+  throw error('Test err msg');
   res.send(await persistence.getOwners());
 });
 
@@ -70,26 +79,30 @@ router.get('/api/vehicles/exists/:number', async function (req, res, next) {
 });
 
 router.post('/api/vehicles/add', async function (req, res, next) {
-  await persistence.addOwner(validateOwnerVehicle(req.body));
+  const owner = validateOwnerVehicle(req.body);
+  if (!await persistence.addOwner(await verifyNotExists(owner.number, res)))
+  {
+    //Record validated and not exists in persistence. Unknown error!
+    throw error('Vehicle owner was not added.');
+  }
   res.send();
 });
 
 router.delete('/api/vehicles/:number', async function (req, res, next) {
-  if (!await persistence.deleteOwner(await verifyExists(req.params.number)))
+  if (!await persistence.deleteOwner(await verifyExists(req.params.number, res)))
   {
-    throw new error('Vehicle owner was not deleted');
+    throw error('Vehicle owner was not deleted');
   }
   res.send();
 });
 
 router.put('/api/vehicles', async function (req, res, next) {
   const vehicleOwner = validateOwnerVehicle(req.body);
-  verifyExists(vehicleOwner.number);
-  if (await persistence.updateOwner(vehicleOwner))
+  if (!await persistence.updateOwner(await verifyExists(vehicleOwner.number, res)))
   {
-    return res.send(vehicleOwner);
+    throw error('Vehicle owner was not deleted');
   }
-  throw error('Vehicle owner was not deleted');
+  return res.send(vehicleOwner);
 });
 
 module.exports = router;
