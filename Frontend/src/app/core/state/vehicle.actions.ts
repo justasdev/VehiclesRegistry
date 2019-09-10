@@ -17,7 +17,7 @@ export interface ApiResponseAction{
   payload?: any,
 }
 
-export const apiResponse = createAction('[Vehicles/API] RESPONSE', (sourceAction: AppAction, error?: Error, payload?: any) => ({sourceAction, error, payload}));
+export const apiResponse = createAction('[Vehicles/API] RESPONSE', (sourceAction: AppAction, error?: ApiError, payload?: any) => ({sourceAction, error, payload}));
 export const loadVehicles = createAction('[Vehicles/API] Load Vehicles');
 export const addVehicle = createAction('[Vehicles/API] Add vehicle', (payload: Vehicle) => ({payload}));
 export const deleteVehicle = createAction('[Vehicles/API] Delete vehicle', (payload: string) => ({payload}));

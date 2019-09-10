@@ -12,11 +12,13 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 }
 
-export class ApiError extends Error{
+export class ApiError{
 
     get message(): string
     {
-      return this.httpError.message;
+      console.log('MESSAGE!!!');
+      //Returns error defined in backend or system error
+      return this.httpError.error || this.httpError.message;
     }
 
     get status(): number
@@ -26,6 +28,5 @@ export class ApiError extends Error{
 
     constructor(public httpError: HttpErrorResponse)
     {
-      super(httpError.message);
     }
 }
